@@ -18,6 +18,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 import {
   AvatarComponent,
@@ -72,10 +73,7 @@ import { IconDirective } from '@coreui/icons-angular';
     ModalComponent,
     ModalHeaderComponent,
     ModalTitleDirective,
-    NavLinkDirective,
     NgTemplateOutlet,
-    RouterLink,
-    SearchButtonComponent,
     SidebarToggleDirective
   ]
 })
@@ -97,6 +95,13 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   constructor() {
     super();
+  }
+
+  readonly #authService = inject(AuthService);
+  readonly currentUser = this.#authService.currentUserSignal;
+
+  logout(): void {
+    this.#authService.logout();
   }
 
   readonly sidebarId = input('sidebar1');

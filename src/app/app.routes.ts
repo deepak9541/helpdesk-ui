@@ -1,14 +1,23 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./views/authentication/login/login.component').then(m => m.LoginComponent),
+    data: {
+      title: 'Login'
+    }
   },
   {
     path: '',
     loadComponent: () => import('./layout').then(m => m.DefaultLayoutComponent),
+    canActivate: [authGuard],
     data: {
       title: 'Home'
     },
@@ -16,26 +25,6 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
-      },
-      {
-        path: 'components',
-        loadChildren: () => import('./views/components/routes').then((m) => m.routes)
-      },
-      {
-        path: 'forms',
-        loadChildren: () => import('./views/forms/routes').then((m) => m.routes)
-      },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/routes').then((m) => m.routes)
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/routes').then((m) => m.routes)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/charts/routes').then((m) => m.routes)
       }
     ]
   },
@@ -47,5 +36,5 @@ export const routes: Routes = [
     path: 'error-pages',
     loadChildren: () => import('./views/error-pages/routes').then((m) => m.routes)
   },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: 'login' }
 ];

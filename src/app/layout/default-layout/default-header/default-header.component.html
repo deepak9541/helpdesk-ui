@@ -11,15 +11,15 @@
     >
       <svg cIcon name="cilMenu" size="lg"></svg>
     </button>
-    <c-search-button
+    <!-- <c-search-button
       (trigger)="searchVisible.set(true)"
       aria-controls="app-header-search-modal"
       aria-label="Open search dialog"
       class="d-none d-sm-flex"
       shortcut="meta+k,ctrl+k"
-    />
+    /> -->
     <c-header-nav class="d-none d-md-flex ms-auto">
-      <a cNavLink>
+      <!-- <a cNavLink>
         <svg cIcon class="my-1" name="cilBell" size="lg"></svg>
       </a>
       <a cNavLink>
@@ -27,7 +27,7 @@
       </a>
       <a cNavLink>
         <svg cIcon class="my-1" name="cilEnvelopeOpen" size="lg"></svg>
-      </a>
+      </a> -->
     </c-header-nav>
 
     <c-header-nav class="ms-auto ms-md-0">
@@ -73,7 +73,7 @@
         cListGroupItem
         class="d-flex justify-content-between align-items-center"
       >
-        CoreUI components overview
+        Support Ticket System overview
         <c-badge color="secondary" shape="rounded-pill">Open</c-badge>
       </button>
       <button
@@ -103,103 +103,45 @@
       [caret]="false"
       aria-label="Open user menu"
       cDropdownToggle
-      class="py-0 pe-0"
+      class="py-0 pe-0 d-flex align-items-center gap-2 btn btn-link text-decoration-none"
     >
       <c-avatar
         alt="User avatar"
-        shape="rounded-1"
+        shape="rounded-circle"
         size="md"
-        src="./assets/images/avatars/8.jpg"
+        src="./assets/images/avatars/profile-pic.jpeg"
         status="success"
         textColor="primary"
       />
+      <div class="d-none d-md-block text-start">
+        <div class="fw-semibold small text-body">{{ currentUser()?.fullName || 'User' }}</div>
+        <c-badge color="primary" class="p-1 px-2 small">{{ currentUser()?.role || 'Guest' }}</c-badge>
+      </div>
     </button>
-    <ul cDropdownMenu class="pt-0 w-auto">
+    <ul cDropdownMenu class="pt-0 w-auto shadow-sm">
       <li>
         <h6
           cDropdownHeader
           class="bg-body-secondary text-body-secondary fw-semibold py-2 rounded-top"
         >
-          Account
+          Signed in as
         </h6>
       </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilBell"></svg>
-          Updates
-          <c-badge class="ms-2 float-end" color="info"> 42</c-badge>
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="/apps/email/inbox">
-          <svg cIcon class="me-2" name="cilEnvelopeOpen"></svg>
-          Messages
-          <c-badge class="ms-2 float-end" color="success"> 42 </c-badge>
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilTask"></svg>
-          Tasks
-          <c-badge class="ms-2 float-end" color="danger"> 42</c-badge>
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilCommentSquare"></svg>
-          Comments
-          <c-badge class="ms-auto" color="warning"> 42</c-badge>
-        </a>
-      </li>
-      <li>
-        <h6
-          cDropdownHeader
-          class="bg-body-secondary text-body-secondary fw-semibold py-2"
-        >
-          Settings
-        </h6>
-      </li>
-      <li></li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilUser"></svg>
-          Profile
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilSettings"></svg>
-          Settings
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilCreditCard"></svg>
-          Payments
-          <c-badge class="ms-2 float-end" color="secondary"> 42 </c-badge>
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilFile"></svg>
-          Projects
-          <c-badge class="ms-2 float-end" color="primary"> 42 </c-badge>
-        </a>
+      <li class="px-3 py-2 small">
+        <div class="fw-bold">{{ currentUser()?.fullName }}</div>
+        <div class="text-body-secondary">{{ currentUser()?.email }}</div>
+        <div class="mt-1">
+          <c-badge color="info">{{ currentUser()?.role }}</c-badge>
+        </div>
       </li>
       <li>
         <hr cDropdownDivider />
       </li>
       <li>
-        <a cDropdownItem routerLink="">
-          <svg cIcon class="me-2" name="cilLockLocked"></svg>
-          Lock Account
-        </a>
-      </li>
-      <li>
-        <a cDropdownItem routerLink="">
+        <button cDropdownItem (click)="logout()" class="text-danger d-flex align-items-center">
           <svg cIcon class="me-2" name="cilAccountLogout"></svg>
           Logout
-        </a>
+        </button>
       </li>
     </ul>
   </c-dropdown>
